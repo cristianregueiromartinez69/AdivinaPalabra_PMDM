@@ -17,6 +17,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,6 +36,7 @@ import com.example.adivinapalabra.viewmodel.ViewModel
 @Composable
 fun MyApp(viewModel: ViewModel) {
     val text by remember { mutableStateOf("") }
+    val textSinonimo by viewModel.sinonimoLiveData.observeAsState(viewModel.getSinonimo())
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -51,7 +53,7 @@ fun MyApp(viewModel: ViewModel) {
                 ShowRondas(0)
             }
             Row {
-                ShowSinonimo("hola")
+                ShowSinonimo(textSinonimo)
             }
             Row {
                 TextNombreEscribir(remember { mutableStateOf(text) })
