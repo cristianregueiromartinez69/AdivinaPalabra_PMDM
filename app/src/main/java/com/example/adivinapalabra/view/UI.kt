@@ -50,6 +50,10 @@ fun MyApp(viewModel: ViewModel) {
             Row {
                 TextNombreEscribir(remember { mutableStateOf(text) })
             }
+            Row {
+                ShowAciertos(0)
+                ShowFallos(0)
+            }
         }
     }
 }
@@ -106,4 +110,38 @@ fun TextNombreEscribir(text: MutableState<String>) {
         modifier = Modifier
             .padding(top = 150.dp, start = 16.dp)
     )
+}
+
+@Composable
+fun ShowAciertos(aciertos:Int){
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(top = 100.dp, start = 30.dp)
+    ) {
+
+        Text(text = "Aciertos: $aciertos" ,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White)
+
+    }
+
+}
+
+@Composable
+fun ShowFallos(fallos:Int){
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(top = 100.dp, start = 30.dp)
+    ) {
+
+        Text(text = "Fallos: $fallos" ,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White)
+
+    }
+
 }
