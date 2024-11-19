@@ -13,6 +13,8 @@ class ViewModel:ViewModel() {
 
     val random = Random
 
+    private var _palabraJugadorLiveData = MutableLiveData<String>()
+    val palabraJugadorLiveData : LiveData<String> get() = _palabraJugadorLiveData
 
     private val _sinonimoLiveData = MutableLiveData<String>()
     val sinonimoLiveData : LiveData<String> get() = _sinonimoLiveData
@@ -29,6 +31,7 @@ class ViewModel:ViewModel() {
     val estadoLiveData : MutableLiveData<Estados> = MutableLiveData(Estados.INICIO)
 
     init {
+        _palabraJugadorLiveData.value = Datos.palabraJugador
         _sinonimoLiveData.value = Datos.sinonimo
         _rondasLiveData.value = Datos.ronda
         _aciertosLiveData.value = Datos.aciertos
@@ -49,6 +52,7 @@ class ViewModel:ViewModel() {
     }
 
     fun addPalabraJugador(palabraJugador: String, palabraMaquina: String){
+        Log.d("palabraJ", getPalabraJugador())
         Log.d("Comprobando", palabraJugador)
         Log.d("Comprobando", palabraMaquina)
         winOrLose(palabraJugador, palabraMaquina)
@@ -90,28 +94,28 @@ class ViewModel:ViewModel() {
 
     private fun auxWinOrLose(aciertos:Int, fallos:Int){
         if(aciertos == 0 && fallos == 3){
+            estadoLiveData.value = Estados.INICIO
             Log.d("GanarOPerder", "Has perdido")
             restartRondas()
             restartAciertos()
             restartFallos()
             restartSinonimo()
-            Estados.INICIO
         }
         else if(aciertos == 1 && fallos == 2){
+            estadoLiveData.value = Estados.INICIO
             Log.d("GanarOPerder", "Has perdido")
             restartRondas()
             restartAciertos()
             restartFallos()
             restartSinonimo()
-            Estados.INICIO
         }
         else if(aciertos > 1 && fallos == 1){
+            estadoLiveData.value = Estados.INICIO
             Log.d("GanarOPerder", "Has perdido")
             restartRondas()
             restartAciertos()
             restartFallos()
             restartSinonimo()
-            Estados.INICIO
         }
     }
 
@@ -126,6 +130,7 @@ class ViewModel:ViewModel() {
 
     fun setPalabraJugador(texto:String){
         Datos.palabraJugador = texto
+        _palabraJugadorLiveData.value = Datos.palabraJugador
     }
 
     fun setRondas(){

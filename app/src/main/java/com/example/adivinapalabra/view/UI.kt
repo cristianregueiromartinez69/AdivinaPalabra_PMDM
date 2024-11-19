@@ -37,7 +37,7 @@ import com.example.adivinapalabra.viewmodel.ViewModel
 
 @Composable
 fun MyApp(viewModel: ViewModel) {
-    val text by remember { mutableStateOf("") }
+    val text by viewModel.palabraJugadorLiveData.observeAsState(viewModel.getPalabraJugador())
     val textSinonimo by viewModel.sinonimoLiveData.observeAsState(viewModel.getSinonimo())
     Box(
         modifier = Modifier
@@ -130,7 +130,7 @@ fun TextNombreEscribir(text: MutableState<String>, viewModel: ViewModel) {
         onValueChange = { newText ->
             text.value = newText
             viewModel.setPalabraJugador(text.value)
-            Log.d("ComprobarNombre", viewModel.getPalabraMaquina())
+            Log.d("ComprobarNombre", viewModel.getPalabraJugador())
         },
         placeholder = { Text("palabra aqui...") },
         modifier = Modifier
@@ -154,6 +154,7 @@ fun ButtonEnter(viewModel: ViewModel, palabraJugador:String, palabraMaquina:Stri
         Button(
             enabled = _activo,
             onClick = {
+
                 viewModel.addPalabraJugador(palabraJugador, palabraMaquina)
             },
             colors = ButtonDefaults.buttonColors(
