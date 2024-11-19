@@ -29,8 +29,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import com.example.adivinapalabra.R
+import com.example.adivinapalabra.viewmodel.ViewModel
 
 @Composable
 fun MyApp(viewModel: ViewModel) {
@@ -64,7 +64,7 @@ fun MyApp(viewModel: ViewModel) {
                 ShowFallos(0)
             }
             Row {
-                ButtonStart()
+                ButtonStart(viewModel)
             }
         }
     }
@@ -188,7 +188,7 @@ fun ShowFallos(fallos:Int){
 }
 
 @Composable
-fun ButtonStart(){
+fun ButtonStart(viewModel: ViewModel){
 
 
     Column(verticalArrangement = Arrangement.Center,
@@ -197,7 +197,7 @@ fun ButtonStart(){
             .padding(top = 5.dp, start = 90.dp)) {
         Button(
             onClick = {
-
+                viewModel.setPalabraDir()
             },
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
