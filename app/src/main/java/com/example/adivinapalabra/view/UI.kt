@@ -61,7 +61,7 @@ fun MyApp(viewModel: ViewModel) {
                 TextNombreEscribir(remember { mutableStateOf(text) }, viewModel)
             }
             Row {
-                ButtonEnter(viewModel, text, viewModel.getPalabra())
+                ButtonEnter(viewModel, text, viewModel.getPalabraMaquina())
             }
             Row {
                 ShowAciertos(0)
@@ -129,8 +129,8 @@ fun TextNombreEscribir(text: MutableState<String>, viewModel: ViewModel) {
         value = text.value,
         onValueChange = { newText ->
             text.value = newText
-            viewModel.setPalabra(text.value)
-            Log.d("ComprobarNombre", viewModel.getPalabra())
+            viewModel.setPalabraJugador(text.value)
+            Log.d("ComprobarNombre", viewModel.getPalabraMaquina())
         },
         placeholder = { Text("palabra aqui...") },
         modifier = Modifier

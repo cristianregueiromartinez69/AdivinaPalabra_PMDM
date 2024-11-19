@@ -49,13 +49,15 @@ class ViewModel:ViewModel() {
     }
 
     fun addPalabraJugador(palabraJugador: String, palabraMaquina: String){
+        Log.d("Comprobando", palabraJugador)
+        Log.d("Comprobando", palabraMaquina)
         winOrLose(palabraJugador, palabraMaquina)
     }
 
     private fun checkPalabra(id: Int): String {
         val palabra = Diccionario.entries.find { it.id == id }
         if (palabra != null) {
-            Datos.palabra = palabra.nombre
+           setPalabraMaquina(palabra.nombre)
             return palabra.nombre
         }
         return ""
@@ -113,13 +115,17 @@ class ViewModel:ViewModel() {
         }
     }
 
+    fun setPalabraMaquina(palabraMaquina: String){
+        Datos.palabra = palabraMaquina
+    }
+
     fun setSinonimo(sinonimoDir:String){
         Datos.sinonimo = sinonimoDir
         _sinonimoLiveData.value = Datos.sinonimo
     }
 
-    fun setPalabra(texto:String){
-        Datos.palabra = texto
+    fun setPalabraJugador(texto:String){
+        Datos.palabraJugador = texto
     }
 
     fun setRondas(){
@@ -137,8 +143,12 @@ class ViewModel:ViewModel() {
         _fallosLiveData.value  = Datos.fallos
     }
 
-    fun getPalabra():String{
+    fun getPalabraMaquina():String{
         return Datos.palabra
+    }
+
+    fun getPalabraJugador():String{
+        return Datos.palabraJugador
     }
 
     fun getSinonimo():String{
