@@ -59,3 +59,20 @@ fun ShowRondas(rondas:Int){
 
 }
 
+@Composable
+fun ShowSinonimo(sinonimo:String){
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(top = 30.dp, start = 115.dp)
+    ) {
+
+        Text(text = "Rondas: $sinonimo" ,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White)
+
+    }
+
+}
+
