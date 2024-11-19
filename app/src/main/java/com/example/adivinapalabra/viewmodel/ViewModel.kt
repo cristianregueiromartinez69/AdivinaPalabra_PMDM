@@ -63,6 +63,12 @@ class ViewModel:ViewModel() {
         }
         return ""
     }
+    
+    fun winOrLose(palabraJugador:String, palabraMaquina:String){
+        if (palabraJugador.equals(palabraMaquina)){
+
+        }
+    }
 
     fun setSinonimo(sinonimoDir:String){
         Datos.sinonimo = sinonimoDir
@@ -71,6 +77,21 @@ class ViewModel:ViewModel() {
 
     fun setPalabra(texto:String){
         Datos.palabra = texto
+    }
+
+    fun setRondas(){
+        Datos.ronda += 1
+        _rondasLiveData.value = Datos.ronda
+    }
+
+    fun setAciertos(){
+        Datos.aciertos += 1
+        _aciertosLiveData.value = Datos.aciertos
+    }
+
+    fun setFallos(){
+        Datos.fallos += 1
+        _fallosLiveData.value  = Datos.fallos
     }
 
     fun getPalabra():String{
@@ -91,6 +112,21 @@ class ViewModel:ViewModel() {
 
     fun getFallos():Int{
         return Datos.fallos
+    }
+
+    fun restartRondas(){
+        Datos.ronda = 0
+        _rondasLiveData.value = Datos.ronda
+    }
+
+    fun restartAciertos(){
+        Datos.aciertos = 0
+        _aciertosLiveData.value = Datos.aciertos
+    }
+
+    fun restartFallos(){
+        Datos.fallos = 0
+        _fallosLiveData.value  = Datos.fallos
     }
 
 
