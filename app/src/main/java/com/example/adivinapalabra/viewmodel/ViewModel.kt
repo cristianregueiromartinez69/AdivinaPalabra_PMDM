@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.adivinapalabra.model.Datos
 import com.example.adivinapalabra.model.Diccionario
+import com.example.adivinapalabra.model.Estados
 import kotlin.random.Random
 
 class ViewModel:ViewModel() {
@@ -24,6 +25,8 @@ class ViewModel:ViewModel() {
     private var _fallosLiveData = MutableLiveData<Int>()
     val fallosLiveData: LiveData<Int> get() = _fallosLiveData
 
+    val estadoLiveData : MutableLiveData<Estados> = MutableLiveData(Estados.INICIO)
+
     init {
         _sinonimoLiveData.value = Datos.sinonimo
         _rondasLiveData.value = Datos.ronda
@@ -34,11 +37,13 @@ class ViewModel:ViewModel() {
 
 
     fun setPalabraDir(){
+        estadoLiveData.value = Estados.GENERANDO
         var numeroAleatorioDiccionario = random.nextInt(1,21)
         var palabraDir = checkPalabra(numeroAleatorioDiccionario)
         var sinonimoDir = checkSinonimo(palabraDir)
         Log.d("Comprobando", palabraDir)
         Log.d("Comprobando", sinonimoDir)
+        estadoLiveData.value = Estados.ADIVINANDO
     }
 
     private fun checkPalabra(id: Int): String {

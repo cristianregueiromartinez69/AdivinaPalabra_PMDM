@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.adivinapalabra.R
 import com.example.adivinapalabra.viewmodel.ViewModel
 
@@ -56,10 +57,10 @@ fun MyApp(viewModel: ViewModel) {
                 ShowSinonimo(textSinonimo)
             }
             Row {
-                TextNombreEscribir(remember { mutableStateOf(text) })
+                TextNombreEscribir(remember { mutableStateOf(text) }, viewModel)
             }
             Row {
-                ButtonEnter()
+                ButtonEnter(viewModel)
             }
             Row {
                 ShowAciertos(0)
@@ -107,7 +108,14 @@ fun ShowSinonimo(sinonimo:String){
 }
 
 @Composable
-fun TextNombreEscribir(text: MutableState<String>) {
+fun TextNombreEscribir(text: MutableState<String>, viewModel: ViewModel) {
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.textoActivo) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.textoActivo
+    }
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -116,6 +124,7 @@ fun TextNombreEscribir(text: MutableState<String>) {
     ) {
     }
     TextField(
+        enabled = _activo,
         value = text.value,
         onValueChange = { newText ->
             text.value = newText
@@ -127,14 +136,20 @@ fun TextNombreEscribir(text: MutableState<String>) {
 }
 
 @Composable
-fun ButtonEnter(){
+fun ButtonEnter(viewModel: ViewModel){
 
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.enterActivo) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.enterActivo
+    }
 
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(top = 20.dp, start = 90.dp)) {
         Button(
+            enabled = _activo,
             onClick = {
 
             },
@@ -192,12 +207,18 @@ fun ShowFallos(fallos:Int){
 @Composable
 fun ButtonStart(viewModel: ViewModel){
 
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.startActivo) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.startActivo
+    }
 
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(top = 5.dp, start = 90.dp)) {
         Button(
+            enabled = _activo,
             onClick = {
                 viewModel.setPalabraDir()
             },
