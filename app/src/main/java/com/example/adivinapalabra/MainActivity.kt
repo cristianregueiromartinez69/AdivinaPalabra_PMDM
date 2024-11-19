@@ -12,14 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.adivinapalabra.ui.theme.AdivinaPalabraTheme
+import com.example.adivinapalabra.view.MyApp
+import com.example.adivinapalabra.viewmodel.ViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModel = ViewModel()
         enableEdgeToEdge()
         setContent {
             AdivinaPalabraTheme {
-
+                MyApp(viewModel)
             }
         }
     }
