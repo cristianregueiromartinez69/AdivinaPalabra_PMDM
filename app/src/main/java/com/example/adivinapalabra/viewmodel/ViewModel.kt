@@ -12,9 +12,6 @@ import kotlin.random.Random
 class ViewModel:ViewModel() {
 
     val random = Random
-    val maxFalloRondaIgualA1 = 2
-    val maxFalloRondaIgualOMayor2 = 1
-    val maxIncrementDificultad = 1
 
 
     private val _sinonimoLiveData = MutableLiveData<String>()
@@ -85,14 +82,24 @@ class ViewModel:ViewModel() {
     }
 
     private fun auxWinOrLose(aciertos:Int, fallos:Int){
-        if(aciertos == maxIncrementDificultad && fallos == maxFalloRondaIgualA1){
+        if(aciertos == 0 && fallos == 3){
+            Log.d("GanarOPerder", "Has perdido")
             restartRondas()
             restartAciertos()
             restartFallos()
             restartSinonimo()
             Estados.INICIO
         }
-        else if(aciertos > maxIncrementDificultad && fallos == maxFalloRondaIgualOMayor2){
+        else if(aciertos == 1 && fallos == 2){
+            Log.d("GanarOPerder", "Has perdido")
+            restartRondas()
+            restartAciertos()
+            restartFallos()
+            restartSinonimo()
+            Estados.INICIO
+        }
+        else if(aciertos > 1 && fallos == 1){
+            Log.d("GanarOPerder", "Has perdido")
             restartRondas()
             restartAciertos()
             restartFallos()
