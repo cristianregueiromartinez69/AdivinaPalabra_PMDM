@@ -21,7 +21,7 @@ fun MyApp(viewModel: ViewModel) {
         Image(
             painter = backgroundImage,
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillHeight,
             modifier = Modifier.fillMaxSize()
         )
     }
