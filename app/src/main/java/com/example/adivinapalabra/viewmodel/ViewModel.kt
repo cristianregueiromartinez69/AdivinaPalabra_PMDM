@@ -14,7 +14,9 @@ class ViewModel:ViewModel() {
     fun setPalabraDir(){
         var numeroAleatorioDiccionario = random.nextInt(1,21)
         var palabraDir = checkPalabra(numeroAleatorioDiccionario)
+        var sinonimoDir = checkSinonimo(palabraDir)
         Log.d("Comprobando", palabraDir)
+        Log.d("Comprobando", sinonimoDir)
     }
 
     private fun checkPalabra(id: Int): String {
@@ -22,6 +24,15 @@ class ViewModel:ViewModel() {
         if (palabra != null) {
             Datos.palabra = palabra.nombre
             return palabra.nombre
+        }
+        return ""
+    }
+
+     fun checkSinonimo(palabra:String):String{
+        val sinoninoDir = Diccionario.entries.find { it.nombre == palabra }
+        if(sinoninoDir != null){
+            Datos.sinonimo = sinoninoDir.sinonimo
+            return sinoninoDir.sinonimo
         }
         return ""
     }
