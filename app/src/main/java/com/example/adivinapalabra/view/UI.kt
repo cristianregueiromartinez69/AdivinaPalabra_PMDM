@@ -38,6 +38,9 @@ fun MyApp(viewModel: ViewModel) {
             Row {
                 ShowRondas(0)
             }
+            Row {
+                ShowSinonimo("hola")
+            }
         }
     }
 }
@@ -64,11 +67,11 @@ fun ShowSinonimo(sinonimo:String){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(top = 30.dp, start = 115.dp)
+            .padding(top = 46.dp, start = 90.dp)
     ) {
 
-        Text(text = "Rondas: $sinonimo" ,
-            fontSize = 25.sp,
+        Text(text = "Sinonimo: $sinonimo" ,
+            fontSize = 23.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White)
 
