@@ -12,6 +12,10 @@ import kotlin.random.Random
 class ViewModel:ViewModel() {
 
     val random = Random
+    val maxFalloRondaIgualA1 = 2
+    val maxFalloRondaIgualOMayor2 = 1
+    val maxIncrementDificultad = 1
+
 
     private val _sinonimoLiveData = MutableLiveData<String>()
     val sinonimoLiveData : LiveData<String> get() = _sinonimoLiveData
@@ -65,8 +69,35 @@ class ViewModel:ViewModel() {
     }
     
     fun winOrLose(palabraJugador:String, palabraMaquina:String){
-        if (palabraJugador.equals(palabraMaquina)){
+        if (palabraJugador == palabraMaquina){
+            Log.d("GanarOPerder", "Has ganado")
+            setRondas()
+            setAciertos()
+            restartFallos()
+            restartSinonimo()
+            estadoLiveData.value = Estados.INICIO
+        }
+        else{
+            setFallos()
+            auxWinOrLose(getAciertos(), getFallos())
+        }
 
+    }
+
+    private fun auxWinOrLose(aciertos:Int, fallos:Int){
+        if(aciertos == maxIncrementDificultad && fallos == maxFalloRondaIgualA1){
+            restartRondas()
+            restartAciertos()
+            restartFallos()
+            restartSinonimo()
+            Estados.INICIO
+        }
+        else if(aciertos > maxIncrementDificultad && fallos == maxFalloRondaIgualOMayor2){
+            restartRondas()
+            restartAciertos()
+            restartFallos()
+            restartSinonimo()
+            Estados.INICIO
         }
     }
 
@@ -127,6 +158,11 @@ class ViewModel:ViewModel() {
     fun restartFallos(){
         Datos.fallos = 0
         _fallosLiveData.value  = Datos.fallos
+    }
+
+    fun restartSinonimo(){
+        Datos.sinonimo = ""
+        _sinonimoLiveData.value = ""
     }
 
 
