@@ -39,6 +39,11 @@ import com.example.adivinapalabra.viewmodel.ViewModel
 fun MyApp(viewModel: ViewModel) {
     val text by viewModel.palabraJugadorLiveData.observeAsState(viewModel.getPalabraJugador())
     val textSinonimo by viewModel.sinonimoLiveData.observeAsState(viewModel.getSinonimo())
+
+    val ronda by viewModel.rondasLiveData.observeAsState(viewModel.getRonda())
+    val acierto by viewModel.aciertosLiveData.observeAsState(viewModel.getAciertos())
+    val fallo by viewModel.fallosLiveData.observeAsState(viewModel.getFallos())
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +57,7 @@ fun MyApp(viewModel: ViewModel) {
         )
         Column {
             Row {
-                ShowRondas(0)
+                ShowRondas(ronda)
             }
             Row {
                 ShowSinonimo(textSinonimo)
@@ -64,8 +69,8 @@ fun MyApp(viewModel: ViewModel) {
                 ButtonEnter(viewModel, text, viewModel.getPalabraMaquina())
             }
             Row {
-                ShowAciertos(0)
-                ShowFallos(0)
+                ShowAciertos(acierto)
+                ShowFallos(fallo)
             }
             Row {
                 ButtonStart(viewModel)
