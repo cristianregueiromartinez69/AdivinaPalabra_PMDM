@@ -61,7 +61,7 @@ fun MyApp(viewModel: ViewModel) {
                 TextNombreEscribir(remember { mutableStateOf(text) }, viewModel)
             }
             Row {
-                ButtonEnter(viewModel)
+                ButtonEnter(viewModel, text, viewModel.getPalabra())
             }
             Row {
                 ShowAciertos(0)
@@ -139,7 +139,7 @@ fun TextNombreEscribir(text: MutableState<String>, viewModel: ViewModel) {
 }
 
 @Composable
-fun ButtonEnter(viewModel: ViewModel){
+fun ButtonEnter(viewModel: ViewModel, palabraJugador:String, palabraMaquina:String){
 
     var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.enterActivo) }
 
@@ -154,7 +154,7 @@ fun ButtonEnter(viewModel: ViewModel){
         Button(
             enabled = _activo,
             onClick = {
-
+                viewModel.addPalabraJugador(palabraJugador, palabraMaquina)
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Magenta,

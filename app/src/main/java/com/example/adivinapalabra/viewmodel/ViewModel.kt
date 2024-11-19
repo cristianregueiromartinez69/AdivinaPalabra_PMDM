@@ -42,9 +42,14 @@ class ViewModel:ViewModel() {
         var numeroAleatorioDiccionario = random.nextInt(1,21)
         var palabraDir = checkPalabra(numeroAleatorioDiccionario)
         var sinonimoDir = checkSinonimo(palabraDir)
+
         Log.d("Comprobando", palabraDir)
         Log.d("Comprobando", sinonimoDir)
         estadoLiveData.value = Estados.ADIVINANDO
+    }
+
+    fun addPalabraJugador(palabraJugador: String, palabraMaquina: String){
+        winOrLose(palabraJugador, palabraMaquina)
     }
 
     private fun checkPalabra(id: Int): String {
