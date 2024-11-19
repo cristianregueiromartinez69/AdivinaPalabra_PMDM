@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -53,6 +57,9 @@ fun MyApp(viewModel: ViewModel) {
             Row {
                 ShowAciertos(0)
                 ShowFallos(0)
+            }
+            Row {
+                Buttonenter()
             }
         }
     }
@@ -144,4 +151,33 @@ fun ShowFallos(fallos:Int){
 
     }
 
+}
+
+@Composable
+fun Buttonenter(){
+
+
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(top = 20.dp, start = 90.dp)) {
+        Button(
+            onClick = {
+
+            },
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Red,
+            ),
+            modifier = Modifier
+                .padding(top = 80.dp)
+                .size(width = 150.dp, height = 60.dp)
+        ){
+            Text(
+                text = "Start",
+                color = Color.White,
+                fontSize = 20.sp
+            )
+        }
+    }
 }
