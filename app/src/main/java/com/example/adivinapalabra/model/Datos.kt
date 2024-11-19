@@ -2,6 +2,7 @@ package com.example.adivinapalabra.model
 
 object Datos {
     var palabra = ""
+    var palabraJugador = ""
     var sinonimo = ""
     var ronda = 0
     var aciertos = 0

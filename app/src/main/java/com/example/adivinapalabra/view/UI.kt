@@ -1,5 +1,6 @@
 package com.example.adivinapalabra.view
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -29,12 +31,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.adivinapalabra.R
+import com.example.adivinapalabra.viewmodel.ViewModel
 
 @Composable
 fun MyApp(viewModel: ViewModel) {
-    val text by remember { mutableStateOf("") }
+    val text by viewModel.palabraJugadorLiveData.observeAsState(viewModel.getPalabraJugador())
+    val textSinonimo by viewModel.sinonimoLiveData.observeAsState(viewModel.getSinonimo())
+
+    val ronda by viewModel.rondasLiveData.observeAsState(viewModel.getRonda())
+    val acierto by viewModel.aciertosLiveData.observeAsState(viewModel.getAciertos())
+    val fallo by viewModel.fallosLiveData.observeAsState(viewModel.getFallos())
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -48,23 +57,23 @@ fun MyApp(viewModel: ViewModel) {
         )
         Column {
             Row {
-                ShowRondas(0)
+                ShowRondas(ronda)
             }
             Row {
-                ShowSinonimo("hola")
+                ShowSinonimo(textSinonimo)
             }
             Row {
-                TextNombreEscribir(remember { mutableStateOf(text) })
+                TextNombreEscribir(remember { mutableStateOf(text) }, viewModel)
             }
             Row {
-                ButtonEnter()
+                ButtonEnter(viewModel, text, viewModel.getPalabraMaquina())
             }
             Row {
-                ShowAciertos(0)
-                ShowFallos(0)
+                ShowAciertos(acierto)
+                ShowFallos(fallo)
             }
             Row {
-                ButtonStart()
+                ButtonStart(viewModel)
             }
         }
     }
@@ -105,7 +114,14 @@ fun ShowSinonimo(sinonimo:String){
 }
 
 @Composable
-fun TextNombreEscribir(text: MutableState<String>) {
+fun TextNombreEscribir(text: MutableState<String>, viewModel: ViewModel) {
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.textoActivo) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.textoActivo
+    }
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -114,9 +130,12 @@ fun TextNombreEscribir(text: MutableState<String>) {
     ) {
     }
     TextField(
+        enabled = _activo,
         value = text.value,
         onValueChange = { newText ->
             text.value = newText
+            viewModel.setPalabraJugador(text.value)
+            Log.d("ComprobarNombre", viewModel.getPalabraJugador())
         },
         placeholder = { Text("palabra aqui...") },
         modifier = Modifier
@@ -125,16 +144,23 @@ fun TextNombreEscribir(text: MutableState<String>) {
 }
 
 @Composable
-fun ButtonEnter(){
+fun ButtonEnter(viewModel: ViewModel, palabraJugador:String, palabraMaquina:String){
 
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.enterActivo) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.enterActivo
+    }
 
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(top = 20.dp, start = 90.dp)) {
         Button(
+            enabled = _activo,
             onClick = {
 
+                viewModel.addPalabraJugador(palabraJugador, palabraMaquina)
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Magenta,
@@ -188,16 +214,22 @@ fun ShowFallos(fallos:Int){
 }
 
 @Composable
-fun ButtonStart(){
+fun ButtonStart(viewModel: ViewModel){
 
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.startActivo) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.startActivo
+    }
 
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(top = 5.dp, start = 90.dp)) {
         Button(
+            enabled = _activo,
             onClick = {
-
+                viewModel.setPalabraDir()
             },
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
