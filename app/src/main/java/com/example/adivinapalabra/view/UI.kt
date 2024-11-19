@@ -1,5 +1,6 @@
 package com.example.adivinapalabra.view
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -128,6 +129,8 @@ fun TextNombreEscribir(text: MutableState<String>, viewModel: ViewModel) {
         value = text.value,
         onValueChange = { newText ->
             text.value = newText
+            viewModel.setPalabra(text.value)
+            Log.d("ComprobarNombre", viewModel.getPalabra())
         },
         placeholder = { Text("palabra aqui...") },
         modifier = Modifier

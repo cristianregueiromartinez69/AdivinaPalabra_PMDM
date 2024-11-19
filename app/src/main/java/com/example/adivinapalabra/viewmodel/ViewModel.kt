@@ -69,6 +69,10 @@ class ViewModel:ViewModel() {
         _sinonimoLiveData.value = Datos.sinonimo
     }
 
+    fun setPalabra(texto:String){
+        Datos.palabra = texto
+    }
+
     fun getPalabra():String{
         return Datos.palabra
     }
